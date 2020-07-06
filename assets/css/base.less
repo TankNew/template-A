@@ -1,29 +1,44 @@
 // out: false
-@bg-gray: #e9ecef;
 @info: #17a2b8;
 @success: #28a745;
 @purple: #7e57c2;
-
 :root {
-  font-size: 0.625rem;
-  --color-primary: #1a4f80;
-  --color-primary-rgb: 23, 77, 123;
-  --color-secondary: #90b9ca;
-  --color-secondary-rgb: 140, 179, 195;
-  --color-tertiary: #4c4c4c;
-  --color-tertiary-rgb: 76, 76, 76;
-  --color-fourth: #fff;
-  --color-fourth-rgb: 255, 255, 255;
-  --color-fifth: #86c510;
-  --color-fifth-rgb: 128, 187, 38;
-  --color-sixth: #efecef;
-  --color-seventh: #000;
-  --color-eighth: #000;
-  --color-ninth: #000;
-  --color-tenth: #000;
-  --color-eleventh: #000;
-  --color-twelfth: #000;
+  font-size: 0.625rem; 
+  --color-primary-base: var(--primary-hue), var(--primary-saturation), var(--primary-lightness);
+  --color-primary-lighter-base: var(--primary-hue), calc(var(--primary-saturation) - 10%),
+    calc(var(--primary-lightness) + 40%);
+  --color-primary-dark-base: var(--primary-hue), calc(var(--primary-saturation) + 10%),
+    calc(var(--primary-lightness) - 20%);
+
+  --color-secondary-base: var(--secondary-hue), var(--secondary-saturation), var(--secondary-lightness);
+  --color-secondary-lighter-base: var(--secondary-hue), calc(var(--secondary-saturation) - 10%),
+    calc(var(--secondary-lightness) + 10%);
+  --color-secondary-dark-base: var(--secondary-hue), calc(var(--secondary-saturation) - 10%),
+    calc(var(--secondary-lightness) + 10%);
+
+  --color-tertiary-base: var(--tertiary-hue), var(--tertiary-saturation), var(--tertiary-lightness);
+  --color-tertiary-lighter-base: var(--tertiary-hue), calc(var(--tertiary-saturation) - 10%),
+    calc(var(--tertiary-lightness) + 10%);
+  --color-tertiary-dark-base: var(--tertiary-hue), calc(var(--tertiary-saturation) - 10%),
+    calc(var(--tertiary-lightness) + 10%);
 }
+@color-primary: hsl(var(--color-primary-base));
+@color-primary-lighter: hsl(var(--color-primary-lighter-base));
+@color-primary-dark: hsl(var(--color-primary-dark-base));
+@color-secondary: hsl(var(--color-secondary-base));
+@color-secondary-lighter: hsl(var(--color-secondary-lighter-base));
+@color-secondary-dark: hsl(var(--color-secondary-dark-base));
+@color-tertiary: hsl(var(--color-tertiary-base));
+@color-tertiary-lighter: hsl(var(--color-tertiary-lighter-base));
+@color-tertiary-dark: hsl(var(--color-tertiary-dark-base));
+
+@color-gray-lighter: #ccc;
+@color-gray: #666;
+@color-gray-dark: #333;
+@color-white: #fff;
+@color-weixin: #fff;
+
+@bg-gray: hsl(0, 0, 95%);
 
 * {
   outline: none !important;
@@ -59,35 +74,35 @@ ul {
   margin: 0;
 }
 a {
-  color: var(--color-tertiary);
+  color: @color-gray;
   &:hover {
     text-decoration: none;
-    color: var(--color-primary);
+    color: @color-primary;
   }
 
   &.secondary {
-    color: var(--color-secondary);
+    color: @color-primary-lighter;
     &:hover {
       text-decoration: none;
-      color: var(--color-fourth);
+      color: @color-white;
     }
   }
 }
 .button-primary {
   padding: 0.5rem 3.5rem;
   border-radius: 4rem;
-  color: var(--color-fourth);
-  background-color: var(--color-primary);
-  border-color: var(--color-secondary);
+  color: @color-white;
+  background-color: @color-primary;
+  border-color: @color-primary-lighter;
   &:hover {
-    color: var(--color-fourth);
-    background-color: var(--color-secondary);
+    color: @color-white;
+    background-color: @color-primary-lighter;
   }
   &:focus,
   &.focus {
-    color: var(--color-fourth);
-    background-color: var(--color-secondary);
-    box-shadow: 0 0 0 0.2rem rgba(var(--color-primary-rgb), 0.5);
+    color: @color-white;
+    background-color: @color-primary-lighter;
+    box-shadow: 0 0 0 0.2rem hsla(var(--color-primary-base), 0.5);
   }
 }
 .gongan {
@@ -111,117 +126,6 @@ a {
   display: none;
 }
 
-.swal-title {
-  margin: 0px;
-  font-size: 1.6rem;
-}
-.swal-footer {
-  background-color: rgb(245, 248, 250);
-  margin-top: 2rem;
-  border-top: 1px solid #e9eef1;
-  overflow: hidden;
-}
-
-.swal-overlay {
-  z-index: 100000000 !important;
-}
-
-#smartAlert {
-  z-index: 100000 !important;
-}
-
-/*修改bootcss*/
-.form-control.is-valid {
-  border-color: #cceecc;
-}
-.font_normal {
-  font-size: 1.4rem;
-}
-.font_10 {
-  font-size: 1rem;
-}
-.clear {
-  clear: both;
-}
-
-.none {
-  display: none;
-}
-
-.pointer {
-  cursor: pointer;
-}
-
-.color-Purple {
-  color: #7e57c2;
-}
-
-.color-primary {
-  color: darken(#428bca, 6.5%);
-}
-
-.color-success {
-  color: #5cb85c;
-}
-
-.color-info {
-  color: #5bc0de;
-}
-
-.color-warning {
-  color: #f0ad4e;
-}
-
-.color-danger {
-  color: #d9534f;
-}
-
-.color-gray {
-  color: #999;
-}
-
-.mr_5 {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-}
-
-.mr_10 {
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
-.mr_20 {
-  margin-left: 2rem;
-  margin-right: 2rem;
-}
-
-.pd_50 {
-  padding-left: 5rem;
-  padding-right: 5rem;
-}
-
-.wauto {
-  width: auto;
-}
-
-.w100 {
-  width: 100%;
-}
-.w75 {
-  width: 75%;
-}
-
-.w50 {
-  width: 50%;
-}
-
-.w25 {
-  width: 25%;
-}
-
-.center {
-  text-align: center;
-}
 /*checkbox定义*/
 .checkbox-circle {
   width: 2rem;

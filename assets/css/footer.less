@@ -1,8 +1,8 @@
 // out: false
 @import 'base.less';
 footer {
-  background-color: var(--color-primary);
-  color: var(--color-secondary);
+  background-color: @color-primary;
+  color: @color-primary-lighter;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,7 +10,7 @@ footer {
   line-height: 2.6rem;
   .contact-info {
     padding: 2rem;
-    border-bottom: 1px solid rgba(var(--color-fourth-rgb), 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     .contact-info-company {
       display: none;
     }
@@ -45,6 +45,7 @@ footer {
         width: 40%;
         .logo > img {
           height: 3rem;
+          filter: grayscale(100%) brightness(100);
         }
         .company-name {
           font-weight: bold;

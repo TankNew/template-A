@@ -72,7 +72,7 @@
       padding: 0.6rem 1rem;
       .cover-title {
         font-size: 1.6rem;
-        color: var(--color-primary);
+        color: @color-primary;
         font-weight: bold;
         padding: 1rem 0;
         display: block;
@@ -91,15 +91,18 @@
       }
     }
     &:hover {
-      box-shadow: 0 0 0 0.1rem var(--color-secondary);
+      box-shadow: 0 0 0 0.1rem @color-primary-lighter;
     }
+  }
+  @media (min-width: 768px) {
+    min-height: 40rem;
   }
 }
 .product-detail-title {
   padding: 2rem 0;
   margin-bottom: 2rem;
   text-align: center;
-  border-bottom: 2px solid var(--color-secondary);
+  border-bottom: 2px solid @color-primary-lighter;
   .product-detail-date {
     display: block;
     margin-top: 1rem;

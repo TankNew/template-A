@@ -3,7 +3,7 @@
 .banner {
   // background-position: center center !important;
   // background-size: 170% 100% !important;
-  text-shadow: 1px 1px 2px var(--color-tertiary);
+  text-shadow: 1px 1px 12px @color-gray;
   height: 0;
   padding-bottom: (960/1920) * 100%;
   position: relative;
@@ -31,6 +31,7 @@
       left: 50%;
       max-width: (960/450) * 100%;
       width: (960/450) * 100% !important;
+      height: 100%;
       transform: translate(-50%, -50%);
       @media (min-width: 768px) {
         width: 100% !important;
@@ -57,8 +58,8 @@
   .swiper-banner-prev {
     left: 0;
     transform: rotate(-45deg) translateY(-50%);
-    border-top: 0.3rem solid var(--color-fifth);
-    border-left: 0.3rem solid var(--color-fifth);
+    border-top: 0.3rem solid @color-weixin;
+    border-left: 0.3rem solid @color-weixin;
     @media (min-width: 768px) {
       left: 10%;
     }
@@ -67,8 +68,8 @@
   .swiper-banner-next {
     right: 0;
     transform: rotate(45deg) translateY(-50%);
-    border-top: 0.3rem solid var(--color-fifth);
-    border-right: 0.3rem solid var(--color-fifth);
+    border-top: 0.3rem solid @color-weixin;
+    border-right: 0.3rem solid @color-weixin;
     @media (min-width: 768px) {
       right: 10%;
     }
@@ -82,14 +83,14 @@
     height: 0.25rem;
     border-radius: 1.5rem;
     opacity: 0.5;
-    background: var(--color-secondary);
+    background: @color-primary-lighter;
     @media (min-width: 768px) {
       width: 6rem;
     }
   }
   .swiper-pagination-bullet-active {
     opacity: 1;
-    background: var(--color-primary);
+    background: @color-primary;
   }
   .carousel {
     height: 0;

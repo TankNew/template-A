@@ -1,17 +1,17 @@
 <template>
   <section class="container">
     <h4 class="page-title">
-      <span>{{ annouce.title }}</span>
+      <span>{{ announce.title }}</span>
     </h4>
-    <h6 class="page-sub-title">{{ formatDate(annouce.creationTime) }}</h6>
+    <h6 class="page-sub-title">{{ formatDate(announce.creationTime) }}</h6>
     <div class="page-content limit-width">
-      <div v-html="annouce.content" class="news-detail"></div>
+      <div v-html="announce.content" class="news-detail"></div>
       <section class="page-content-announce">
         <client-only>
           <div v-swiper:mySwiper="swiperOption">
             <div class="swiper-wrapper position-relative">
               <div
-                v-for="(item, index) in annouces"
+                v-for="(item, index) in announces"
                 :key="index"
                 @click="target(item.id)"
                 class="swiper-slide"
@@ -57,15 +57,15 @@ export default {
   },
   async asyncData({ isDev, route, store, env, params, query, req, res, redirect, error }) {
     const id = route.params.id
-    const annouce = await store.dispatch('app/getAnounce', { params: { id } })
-    const annoucesParams = {
+    const announce = await store.dispatch('app/getAnounce', { params: { id } })
+    const announcesParams = {
       params: {
         SkipCount: 0,
         MaxResultCount: 10
       }
     }
-    const annouces = (await store.dispatch('app/getAnounces', annoucesParams)).items
-    return { annouce, annouces }
+    const announces = (await store.dispatch('app/getAnounces', announcesParams)).items
+    return { announce, announces }
   },
   created() {
     this.$store.dispatch('app/setcurrentPath', {
@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     target(id) {
-      window.open(`/${this.culture}/annouce/detail/` + String(id, '_blank'))
+      window.open(`/${this.culture}/announce/detail/` + String(id, '_blank'))
     },
     formatDate(val) {
       return tools.date(val)

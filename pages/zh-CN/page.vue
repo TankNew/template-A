@@ -5,16 +5,6 @@
         class="name"
       >{{ currentPathParent!==null?currentPathParent.displayName:currentPath.displayName }}</span>
     </h4>
-    <div v-if="currentPathParent!==null" class="page-inside-nav">
-      <dl>
-        <dd v-for="child in currentPathParent.children" :key="child.id">
-          <nuxt-link
-            :to="child.url"
-            :class="[child.id===currentPath.id?'active':'','white']"
-          >{{ child.displayName }}</nuxt-link>
-        </dd>
-      </dl>
-    </div>
     <nuxt-child />
   </div>
 </template>

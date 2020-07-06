@@ -221,7 +221,7 @@ export default {
     ...mapState({
       abp: state => state.abp,
       companyInfo: state => state.app.companyInfo,
-      navbars: state => state.app.navbars,
+      navbars: state => state.app.navbars.slice(0, 6),
       currentPath: state => state.app.currentPath,
       currentPathParent: state => state.app.currentPathParent,
       breadCrumbItems: state => state.app.breadCrumbItems,
@@ -229,7 +229,9 @@ export default {
         state.app.currentPath.bannerImgs
           ? state.app.currentPath.bannerImgs.length > 0
             ? state.app.currentPath.bannerImgs
-            : state.app.currentPathParent.bannerImgs
+            : state.app.currentPathParent
+            ? state.app.currentPathParent.bannerImgs
+            : []
           : []
     }),
     title() {

@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <h4 class="page-title">
-      <i class="fas fa-bookmark" />
       <span>{{ catalogItem.title }}</span>
     </h4>
     <h6 class="page-sub-title">{{ formatDate(catalogItem.creationTime) }}</h6>

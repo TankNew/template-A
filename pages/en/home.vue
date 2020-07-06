@@ -9,7 +9,7 @@
           <div v-swiper:mySwiper="swiperOption">
             <div class="swiper-wrapper position-relative">
               <div
-                v-for="(item, index) in annouces"
+                v-for="(item, index) in announces"
                 :key="index"
                 @click="target(item.id)"
                 class="swiper-slide"
@@ -85,7 +85,7 @@ export default {
       wordIndex: 0,
       observer: null,
       ad1: {},
-      annouces: [],
+      announces: [],
       productGroup1: {},
       productGroup1Items: [],
       isProductLoading: false,
@@ -109,7 +109,7 @@ export default {
   },
   /**存放异步方法 */
   created() {
-    this.loadAnnouce()
+    this.loadannounce()
     this.loadAd1()
     this.loadProductGroup1()
   },
@@ -119,7 +119,7 @@ export default {
   },
   methods: {
     target(id) {
-       window.open(`/${this.culture}/annouce/detail/` + String(id, '_blank'))
+       window.open(`/${this.culture}/announce/detail/` + String(id, '_blank'))
     },
     getImgUrl(val) {
       if (val) return AppConsts.remoteServiceBaseUrl + val
@@ -156,7 +156,7 @@ export default {
     filter(val, length) {
       return tools.cutString(tools._filter(val), length)
     },
-    async loadAnnouce() {
+    async loadannounce() {
       const params = {
         params: {
           SkipCount: 0,
@@ -164,7 +164,7 @@ export default {
         }
       }
       const res = await this.$store.dispatch('app/getAnounces', params)
-      this.annouces = res.items
+      this.announces = res.items
     },
     loadProductGroup1() {
       const Groups = this.$store.state.app.homePage.groups.filter(

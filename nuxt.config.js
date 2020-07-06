@@ -52,7 +52,7 @@ export default {
    */
   css: [
     'swiper/dist/css/swiper.css',
-    'assets/css/main.less',
+    `assets/css/theme.${process.env.THEME ? process.env.THEME + '.' : ''}less`,
     '~/static/css/all.min.css'
     // '~/node_modules/material-design-icons/iconfont/material-icons.css'
   ],

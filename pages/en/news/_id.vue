@@ -57,7 +57,7 @@
       </section>
       <section v-else class="page-news-list-container">
         <div class="page-news-leftbar">
-          <dl class="page-news-leftbar-groups">
+          <dl v-if="currentPathParent" class="page-news-leftbar-groups">
             <dt>{{ $L(`QuickMenu`) }}</dt>
             <dd v-for="item in currentPathParent.children" :key="item.code">
               <a
@@ -87,7 +87,7 @@
             >
               <div class="news-info">
                 <a class="news-title" href="javascript:void(0)">{{ item.title }}</a>
-                <p class="news-intro">{{ filter(item.content,120) }}</p>
+                <p class="news-intro">{{ filter(item.content,200) }}</p>
               </div>
             </li>
           </ul>
@@ -125,7 +125,9 @@ export default {
       currentPath: state => state.app.currentPath,
       currentPathParent: state => state.app.currentPathParent,
       isRootGroup: state =>
-        state.app.currentPath.code.split('.').length - 1 === 1 && state.app.currentPath.children.length > 0
+        state.app.currentPath.code
+          ? state.app.currentPath.code.split('.').length - 1 === 1 && state.app.currentPath.children.length > 0
+          : false
     })
   },
   watch: {

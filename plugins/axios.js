@@ -3,11 +3,9 @@ export default function({ $axios, store, app, redirect }) {
     config => {
       config.headers.common[store.state.app.headerName] = store.getters['app/getCulture']
 
-      /**开发测试 */
       const multiTenancyHeader = 'Abp.TenantId'
       const multiTenancy = app.$cookies.get(multiTenancyHeader)
-      config.headers.common[multiTenancyHeader] = 16
-      /**开发测试 over*/
+      config.headers.common[multiTenancyHeader] = process.env.TENANT_ID || '18'
 
       return config
     },
