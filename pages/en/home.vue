@@ -42,7 +42,7 @@
             </div>
             <div class="product-info">
               <h3 class="product-title">{{ item.title }}</h3>
-              <p v-html="filter(item.content,40)" class="product-content"></p>
+              <p v-html="filter(item.content,100)" class="product-content"></p>
             </div>
           </div>
         </li>

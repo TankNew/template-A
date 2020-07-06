@@ -4,7 +4,7 @@
 <script>
 export default {
   fetch(context) {
-    context.redirect('/en/home')
+    context.redirect('/zh-CN/home')
     // The fetch method is used to fill the store before rendering the page
   }
 }

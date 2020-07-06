@@ -7,11 +7,11 @@
         class="page-sub-mobile-select"
       >
         <a v-if="collapse" @click="collapse=!collapse">
-          分类
+          {{ $L(`Expand`) }}
           <i class="fas fa-angle-down"></i>
         </a>
         <a v-else @click="collapse=!collapse">
-          分类
+          {{ $L(`Collapse`) }}
           <i class="fas fa-angle-up"></i>
         </a>
       </div>
@@ -26,7 +26,7 @@
             <dl>
               <dd v-for="child in currentPath.children" :key="child.id">
                 <a
-                  @click.stop.prevent="goNewsGroup(child.catalogGroupId,3)"
+                  @click.stop.prevent="goNewsGroup(child.catalogGroupId,1)"
                   href="javascript:void(0)"
                 >{{ child.displayName }}</a>
               </dd>
@@ -57,7 +57,10 @@
       </section>
       <section v-else class="page-news-list-container">
         <div class="page-news-leftbar">
-          <dl v-if="currentPathParent" class="page-news-leftbar-groups">
+          <dl
+            v-if="currentPathParent&&currentPathParent.children.length>0"
+            class="page-news-leftbar-groups"
+          >
             <dt>{{ $L(`QuickMenu`) }}</dt>
             <dd v-for="item in currentPathParent.children" :key="item.code">
               <a
@@ -112,6 +115,7 @@ import tools from '../../../utiltools/tools'
 export default {
   data() {
     return {
+      collapse: true,
       currentPage: 1,
       perPage: 10,
       pageContent: {}
@@ -125,9 +129,7 @@ export default {
       currentPath: state => state.app.currentPath,
       currentPathParent: state => state.app.currentPathParent,
       isRootGroup: state =>
-        state.app.currentPath.code
-          ? state.app.currentPath.code.split('.').length - 1 === 1 && state.app.currentPath.children.length > 0
-          : false
+        state.app.currentPath.code.split('.').length - 1 === 1 && state.app.currentPath.children.length > 0
     })
   },
   watch: {
@@ -135,6 +137,8 @@ export default {
       this.currentPage = 1
       this.perPage = 10
       this.pageChange()
+      console.log(this.currentPath.id)
+      console.log(this.currentPathParent.id)
     }
   },
   validate({ params }) {
@@ -147,6 +151,7 @@ export default {
   },
   created() {
     this.pageChange()
+    console.log(this.currentPath.id)
   },
   methods: {
     goNewsGroup(id, type) {

@@ -1,5 +1,10 @@
 <template>
-  <section></section>
+  <section class="container insider">
+    <h4 class="page-title">
+      <span class="name">{{ $L(`Announce`) }}</span>
+    </h4>
+    <div class="page-content"></div>
+  </section>
 </template>
 <script>
 export default {

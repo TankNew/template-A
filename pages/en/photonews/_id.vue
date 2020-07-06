@@ -1,45 +1,105 @@
 <template>
-  <div class="container">
+  <div class="product-inside-container insider">
     <h4 class="page-title">
       <span class="name">{{ currentPath.displayName }}</span>
+      <div
+        v-if="currentPath.children&&currentPath.children.length>0&&!isRootGroup"
+        class="page-sub-mobile-select"
+      >
+        <a v-if="collapse" @click="collapse=!collapse">
+          {{ $L(`Expand`) }}
+          <i class="fas fa-angle-down"></i>
+        </a>
+        <a v-else @click="collapse=!collapse">
+          {{ $L(`Collapse`) }}
+          <i class="fas fa-angle-up"></i>
+        </a>
+      </div>
     </h4>
-    <div class="page-product-list">
-      <ul>
-        <li
-          v-for="item in pageContent.items"
-          :key="item.id"
-          @click="goNewsDetail(item.id,2)"
-        >
-          <span class="cover">
-            <img :src="item.cover" />
-          </span>
-          <span class="cover-title">
-            <a href="javascript:void(0)">{{ item.title }}</a>
-          </span>
-        </li>
-      </ul>
-    </div>
-    <div class="my-5">
-      <b-pagination
-        v-model="currentPage"
-        :per-page="perPage"
-        :total-rows="pageContent.totalCount"
-        @input="pageChange"
-        align="center"
-        pills
-      ></b-pagination>
-    </div>
+    <section class="position-relative">
+      <div
+        v-if="currentPath.children&&currentPath.children.length>0&&!isRootGroup"
+        :class="['page-sub-groups',collapse?'':'expand']"
+      >
+        <div @click="collapse=true" class="table">
+          <div @click.stop.prevent class="list">
+            <dl>
+              <dd v-for="child in currentPath.children" :key="child.id">
+                <a
+                  @click.stop.prevent="goNewsGroup(child.catalogGroupId,2)"
+                  href="javascript:void(0)"
+                >{{ child.displayName }}</a>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <section v-if="isRootGroup">
+        <div class="page-product-list">
+          <ul>
+            <li
+              v-for="item in subGroups"
+              :key="item.id"
+              @click="goNewsGroup(item.id,2)"
+            >
+              <span class="cover">
+                <img :src="item.cover" />
+              </span>
+              <div class="cover-info">
+                <span class="cover-title">
+                  <a href="javascript:void(0)">{{ item.displayName }}</a>
+                </span>
+                <p v-html="filter(item.info,100)" class="cover-content"></p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section v-else>
+        <div class="page-product-list">
+          <ul>
+            <li
+              v-for="item in pageContent.items"
+              :key="item.id"
+              @click="goNewsDetail(item.id,2)"
+            >
+              <span class="cover">
+                <img :src="item.cover" />
+              </span>
+              <div class="cover-info">
+                <span class="cover-title">
+                  <a href="javascript:void(0)">{{ item.title }}</a>
+                </span>
+                <p v-html="filter(item.content,100)" class="cover-content"></p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="my-5">
+          <b-pagination
+            v-model="currentPage"
+            :per-page="perPage"
+            :total-rows="pageContent.totalCount"
+            @input="pageChange"
+            align="center"
+            pills
+          ></b-pagination>
+        </div>
+      </section>
+    </section>
   </div>
 </template>
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+import tools from '../../../utiltools/tools'
 const c = 1
-const p = 10
+const p = 8
 export default {
   data() {
     return {
       currentPage: c,
-      perPage: p
+      perPage: p,
+      collapse: true
     }
   },
   computed: {
@@ -47,7 +107,9 @@ export default {
       culture: state => state.app.culture,
       navbars: state => state.app.navbars,
       currentPath: state => state.app.currentPath,
-      currentPathParent: state => state.app.currentPathParent
+      currentPathParent: state => state.app.currentPathParent,
+      isRootGroup: state =>
+        state.app.currentPath.code.split('.').length - 1 === 1 && state.app.currentPath.children.length > 0
     })
   },
   validate({ params }) {
@@ -64,11 +126,15 @@ export default {
       }
     }
     const json = await store.dispatch('app/getCatalogList', param)
+    const subJson = await store.dispatch('app/getCatalogGroupList', { params: { id: route.params.id } })
 
-    return { pageContent: json }
+    return { pageContent: json, subGroups: subJson }
   },
   created() {},
   methods: {
+    filter(val, length) {
+      return tools.cutString(tools._filter(val), length)
+    },
     goNewsGroup(id, type) {
       switch (type) {
         case 1:
