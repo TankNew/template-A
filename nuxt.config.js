@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'production')
 export default {
   publicRuntimeConfig: {
     NUXT_ENV_THEME: process.env.NUXT_ENV_THEME || 'purple',
-    NUXT_ENV_TENANT_ID: process.env.NUXT_ENV_TENANT_ID || 19,
+    NUXT_ENV_TENANT_ID: process.env.NUXT_ENV_TENANT_ID || 18,
     API_SECRET: `1234`
   },
   mode: 'universal',
