@@ -1,6 +1,6 @@
 <template>
   <section class="home">
-    <section class="container">
+    <section v-if="announces.length>0" class="container">
       <h3 class="page-title">
         <span class="name">{{ $L('Announce') }}</span>
       </h3>
@@ -24,7 +24,7 @@
         </client-only>
       </section>
     </section>
-    <section class="container product-list">
+    <section v-if="productGroup1" class="container product-list">
       <h3 class="page-title">
         <span class="name">{{ productGroup1.displayName }}</span>
         <span class="more">
@@ -48,7 +48,7 @@
         </li>
       </ul>
     </section>
-    <section class="about">
+    <section v-if="ad1" class="about">
       <section class="container">
         <h3 class="page-title">
           <span class="name">{{ ad1.title }}</span>
@@ -84,10 +84,6 @@ export default {
     return {
       wordIndex: 0,
       observer: null,
-      ad1: {},
-      announces: [],
-      productGroup1: {},
-      productGroup1Items: [],
       isProductLoading: false,
       swiperOption: {
         direction: 'vertical',
@@ -104,22 +100,82 @@ export default {
       homePage: state => state.app.homePage
     })
   },
-  async fetch(context) {
-    await context.store.dispatch('app/getHomePage')
-  },
   /**存放异步方法 */
-  created() {
-    this.loadannounce()
-    this.loadAd1()
-    this.loadProductGroup1()
+  async asyncData({ isDev, route, store, env, query, req, res, redirect, error }) {
+    await store.dispatch('app/getHomePage')
+
+    let newsGroup1, picGroup1, productGroup1, productGroup1Items, params, ad1, announces
+    const homeGroups = store.state.app.homePage.groups.filter(x => x.catalogGroup)
+
+    ad1 = store.state.app.homePage.blocks.length > 0 ? store.state.app.homePage.blocks[0] : null
+    newsGroup1 =
+      homeGroups.filter(x => x.catalogGroup.catalogType === 1).length > 0
+        ? homeGroups.filter(x => x.catalogGroup.catalogType === 1)[0].catalogGroup
+        : null
+    picGroup1 =
+      homeGroups.filter(x => x.catalogGroup.catalogType === 2).length > 0
+        ? homeGroups.filter(x => x.catalogGroup.catalogType === 2)[0].catalogGroup
+        : null
+    productGroup1 =
+      homeGroups.filter(x => x.catalogGroup.catalogType === 3).length > 0
+        ? homeGroups.filter(x => x.catalogGroup.catalogType === 3)[0].catalogGroup
+        : null
+    if (newsGroup1 !== null) {
+      params = {
+        params: {
+          CatalogGroupId: newsGroup1.id,
+          SkipCount: 0,
+          MaxResultCount: 6,
+          Sorting: 'IsTop DESC, Number DESC'
+        }
+      }
+      newsGroup1.items = (await store.dispatch('app/getCatalogList', params)).items
+    }
+    if (picGroup1 !== null) {
+      params = {
+        params: {
+          CatalogGroupId: picGroup1.id,
+          SkipCount: 0,
+          MaxResultCount: 6,
+          Sorting: 'IsTop DESC, Number DESC'
+        }
+      }
+      picGroup1.items = (await store.dispatch('app/getCatalogList', params)).items
+    }
+    if (productGroup1 !== null) {
+      params = {
+        params: {
+          Id: productGroup1.id
+        }
+      }
+      const result = await store.dispatch('app/getCatalogGroupList', params)
+      productGroup1.children = result
+
+      params = {
+        params: {
+          CatalogGroupId: productGroup1.id,
+          SkipCount: 0,
+          MaxResultCount: 6,
+          Sorting: 'IsTop DESC, Number DESC'
+        }
+      }
+      productGroup1.items = (await store.dispatch('app/getCatalogList', params)).items
+    }
+    params = {
+      params: {
+        SkipCount: 0,
+        MaxResultCount: 2
+      }
+    }
+    announces = (await store.dispatch('app/getAnounces', params)).items
+    return { ad1, announces, newsGroup1, picGroup1, productGroup1 }
   },
-  mounted() {
-    this.loadProductGroup1Chilidren()
-    this.loadProductGroup1Items()
+  created() {
+    console.log(this.ad1)
   },
   methods: {
     target(id) {
-       window.open(`/${this.culture}/announce/detail/` + String(id, '_blank'))
+      window.open(`/${this.culture}/announce/detail/` + String(id, '_blank'))
     },
     getImgUrl(val) {
       if (val) return AppConsts.remoteServiceBaseUrl + val
@@ -156,53 +212,6 @@ export default {
     filter(val, length) {
       return tools.cutString(tools._filter(val), length)
     },
-    async loadannounce() {
-      const params = {
-        params: {
-          SkipCount: 0,
-          MaxResultCount: 10
-        }
-      }
-      const res = await this.$store.dispatch('app/getAnounces', params)
-      this.announces = res.items
-    },
-    loadProductGroup1() {
-      const Groups = this.$store.state.app.homePage.groups.filter(
-        x => x.catalogGroup && x.catalogGroup.catalogType === 3
-      )
-      if (Groups.length > 0) {
-        this.productGroup1 = Groups[0].catalogGroup
-      }
-    },
-    async loadProductGroup1Chilidren() {
-      this.isProductLoading = true
-      if (this.productGroup1.id && this.productGroup1.id > 0) {
-        const pa = {
-          params: {
-            Id: this.productGroup1.id
-          }
-        }
-        const result = await this.$store.dispatch('app/getCatalogGroupList', pa)
-        this.productGroup1.children = result
-      }
-      this.isProductLoading = false
-    },
-    async loadProductGroup1Items() {
-      this.isProductLoading = true
-      if (this.productGroup1.id && this.productGroup1.id > 0) {
-        const params = {
-          params: {
-            CatalogGroupId: this.productGroup1.id,
-            SkipCount: 0,
-            MaxResultCount: 6,
-            Sorting: 'IsTop DESC, Number DESC'
-          }
-        }
-        const res = await this.$store.dispatch('app/getCatalogList', params)
-        this.productGroup1Items = res.items
-      }
-      this.isProductLoading = false
-    },
     async loadProductGroup1SubGroupItems(item) {
       this.isProductLoading = true
       const params = {
@@ -216,9 +225,6 @@ export default {
       const res = await this.$store.dispatch('app/getCatalogList', params)
       this.productGroup1Items = res.items
       this.isProductLoading = false
-    },
-    loadAd1() {
-      this.ad1 = this.homePage.blocks.length > 0 ? this.homePage.blocks[0] : {}
     }
   }
 }

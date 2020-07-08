@@ -91,6 +91,7 @@ const actions = {
     return res
   },
   findParentsByCode(arry, code) {
+    code.slice(0, code.lastIndexOf('.'))
     for (let i = 0; i < arry.length; i++) {
       if (arry[i].code && code && code.includes(arry[i].code)) {
         parents.push(arry[i])
