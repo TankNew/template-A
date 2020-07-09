@@ -16,6 +16,7 @@ if (process.env.NODE_ENV === 'development') css.push(`assets/css/theme.${default
 
 export default {
   publicRuntimeConfig: {
+    NUXT_ENV: process.env.NUXT_ENV || process.env.NODE_ENV,
     NUXT_ENV_THEME: process.env.NUXT_ENV_THEME || defaultTheme,
     NUXT_ENV_TENANT_ID: process.env.NUXT_ENV_TENANT_ID || 18,
     API_SECRET: `1234`

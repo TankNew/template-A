@@ -111,6 +111,16 @@
       </client-only>
     </section>
     <section class="main">
+      <div v-if="isDevelopment" class="development">
+        <ul>
+          <li v-for="item in themes" :key="item.displayName">
+            <a
+              @click="changeTheme(item)"
+              :style="`background-color:hsl(${item.hue},${item.saturation},${item.lightness})`"
+            ></a>
+          </li>
+        </ul>
+      </div>
       <div v-if="!currentPath.isHome" class="breadCrumb-container">
         <div class="container">
           <b-breadcrumb :items="breadCrumbItems"></b-breadcrumb>
@@ -220,6 +230,7 @@ export default {
   computed: {
     ...mapState({
       abp: state => state.abp,
+      themes: state => state.themes,
       companyInfo: state => state.app.companyInfo,
       navbars: state => state.app.navbars.slice(0, 6),
       currentPath: state => state.app.currentPath,
@@ -261,13 +272,23 @@ export default {
     context.store.commit('app/setCulture', language)
     await context.store.dispatch('app/getCompanyInfo')
     await context.store.dispatch('app/getNavbars')
-    return { name: 'Main', userAgent: context.userAgent, language }
+    return {
+      name: 'Main',
+      userAgent: context.userAgent,
+      language,
+      isDevelopment: context.$config.NUXT_ENV === 'development'
+    }
   },
   created() {
     this.setcurrentPath({ path: this.$route.path })
   },
   mounted() {},
   methods: {
+    changeTheme(val) {
+      document.documentElement.style.setProperty('--primary-hue', val.hue)
+      document.documentElement.style.setProperty('--primary-saturation', val.saturation)
+      document.documentElement.style.setProperty('--primary-lightness', val.lightness)
+    },
     changeLanguage(lang) {
       window.location.href = '/' + lang + '/home'
     },

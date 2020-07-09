@@ -171,7 +171,6 @@ export default {
     return { ad1, announces, newsGroup1, picGroup1, productGroup1 }
   },
   created() {
-    console.log(this.ad1)
   },
   methods: {
     target(id) {
