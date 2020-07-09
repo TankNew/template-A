@@ -1,44 +1,18 @@
 // out: false
-@info: #17a2b8;
-@success: #28a745;
-@purple: #7e57c2;
+@import 'root.less';
+@import 'main.less';
+@import 'header.less';
+@import 'banner.less';
+@import 'footer.less';
+@import 'homepage.less';
+@import 'contact.less';
+@import 'partners.less';
+@import 'news.less';
+@import 'product.less';
+
 :root {
-  font-size: 0.625rem; 
-  --color-primary-base: var(--primary-hue), var(--primary-saturation), var(--primary-lightness);
-  --color-primary-lighter-base: var(--primary-hue), calc(var(--primary-saturation) - 10%),
-    calc(var(--primary-lightness) + 40%);
-  --color-primary-dark-base: var(--primary-hue), calc(var(--primary-saturation) + 10%),
-    calc(var(--primary-lightness) - 20%);
-
-  --color-secondary-base: var(--secondary-hue), var(--secondary-saturation), var(--secondary-lightness);
-  --color-secondary-lighter-base: var(--secondary-hue), calc(var(--secondary-saturation) - 10%),
-    calc(var(--secondary-lightness) + 10%);
-  --color-secondary-dark-base: var(--secondary-hue), calc(var(--secondary-saturation) - 10%),
-    calc(var(--secondary-lightness) + 10%);
-
-  --color-tertiary-base: var(--tertiary-hue), var(--tertiary-saturation), var(--tertiary-lightness);
-  --color-tertiary-lighter-base: var(--tertiary-hue), calc(var(--tertiary-saturation) - 10%),
-    calc(var(--tertiary-lightness) + 10%);
-  --color-tertiary-dark-base: var(--tertiary-hue), calc(var(--tertiary-saturation) - 10%),
-    calc(var(--tertiary-lightness) + 10%);
+  font-size: 0.625rem;
 }
-@color-primary: hsl(var(--color-primary-base));
-@color-primary-lighter: hsl(var(--color-primary-lighter-base));
-@color-primary-dark: hsl(var(--color-primary-dark-base));
-@color-secondary: hsl(var(--color-secondary-base));
-@color-secondary-lighter: hsl(var(--color-secondary-lighter-base));
-@color-secondary-dark: hsl(var(--color-secondary-dark-base));
-@color-tertiary: hsl(var(--color-tertiary-base));
-@color-tertiary-lighter: hsl(var(--color-tertiary-lighter-base));
-@color-tertiary-dark: hsl(var(--color-tertiary-dark-base));
-
-@color-gray-lighter: #ccc;
-@color-gray: #666;
-@color-gray-dark: #333;
-@color-white: #fff;
-@color-weixin: #fff;
-
-@bg-gray: hsl(0, 0, 95%);
 
 * {
   outline: none !important;
@@ -81,7 +55,7 @@ a {
   }
 
   &.secondary {
-    color: @color-primary-lighter;
+    color: @color-primary;
     &:hover {
       text-decoration: none;
       color: @color-white;
@@ -102,7 +76,7 @@ a {
   &.focus {
     color: @color-white;
     background-color: @color-primary-lighter;
-    box-shadow: 0 0 0 0.2rem hsla(var(--color-primary-base), 0.5);
+    box-shadow: 0 0 0 0.2rem hsla(@color-primary-hsl, 0.5);
   }
 }
 .gongan {

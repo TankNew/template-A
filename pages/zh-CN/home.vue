@@ -35,7 +35,10 @@
         </span>
       </h3>
       <ul>
-        <li v-for="item in productGroup1Items" @click="goNewsDetail(item.id,3)">
+        <li
+          v-for="item in productGroup1.items"
+          @click="goNewsDetail(item.id,3)"
+        >
           <div class="product-container">
             <div class="product-cover">
               <img :src="item.cover" />
@@ -104,7 +107,7 @@ export default {
   async asyncData({ isDev, route, store, env, query, req, res, redirect, error }) {
     await store.dispatch('app/getHomePage')
 
-    let newsGroup1, picGroup1, productGroup1, productGroup1Items, params, ad1, announces
+    let newsGroup1, picGroup1, productGroup1, params, ad1, announces
     const homeGroups = store.state.app.homePage.groups.filter(x => x.catalogGroup)
 
     ad1 = store.state.app.homePage.blocks.length > 0 ? store.state.app.homePage.blocks[0] : null
@@ -170,9 +173,7 @@ export default {
     announces = (await store.dispatch('app/getAnounces', params)).items
     return { ad1, announces, newsGroup1, picGroup1, productGroup1 }
   },
-  created() {
-    console.log(this.ad1)
-  },
+  created() {},
   methods: {
     target(id) {
       window.open(`/${this.culture}/announce/detail/` + String(id, '_blank'))
@@ -211,20 +212,6 @@ export default {
     },
     filter(val, length) {
       return tools.cutString(tools._filter(val), length)
-    },
-    async loadProductGroup1SubGroupItems(item) {
-      this.isProductLoading = true
-      const params = {
-        params: {
-          CatalogGroupId: item.id,
-          SkipCount: 0,
-          MaxResultCount: 8,
-          Sorting: 'IsTop DESC, Number DESC'
-        }
-      }
-      const res = await this.$store.dispatch('app/getCatalogList', params)
-      this.productGroup1Items = res.items
-      this.isProductLoading = false
     }
   }
 }

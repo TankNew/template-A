@@ -10,9 +10,13 @@ if (process.env.NODE_ENV === 'production')
     // proxy: true,
     credentials: true
   }
+const defaultTheme = 'blue'
+let css = ['swiper/dist/css/swiper.css', '~/static/css/all.min.css']
+if (process.env.NODE_ENV === 'development') css.push(`assets/css/theme.${defaultTheme}.less`)
+
 export default {
   publicRuntimeConfig: {
-    NUXT_ENV_THEME: process.env.NUXT_ENV_THEME || 'purple',
+    NUXT_ENV_THEME: process.env.NUXT_ENV_THEME || defaultTheme,
     NUXT_ENV_TENANT_ID: process.env.NUXT_ENV_TENANT_ID || 18,
     API_SECRET: `1234`
   },
@@ -55,11 +59,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [
-    'swiper/dist/css/swiper.css',
-    '~/static/css/all.min.css'
-    // '~/node_modules/material-design-icons/iconfont/material-icons.css'
-  ],
+  css,
   /*
    ** Plugins to load before mounting the App
    */

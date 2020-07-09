@@ -8,7 +8,7 @@ header {
     top: 0;
     width: 100%;
     padding: 1rem;
-    color: @color-primary-lighter;
+    color: @color-white;
     background-color: @color-primary;
     z-index: 99;
     > * {
@@ -212,7 +212,7 @@ header {
   .navbar-nav {
     margin-right: auto;
     margin-left: auto;
-    background-color: hsla(var(--color-primary-base), 0.8);
+    background-color: hsla(@color-primary-hsl, 0.8);
     width: 100%;
 
     .nav-link {
@@ -306,16 +306,16 @@ header {
     padding-bottom: 0;
     border-top: none;
     min-width: 100%;
-    background-color: hsla(var(--color-primary-base), 0.4);
+    background-color: hsla(@color-primary-hsl, 0.4);
     @media (min-width: 992px) {
-      background-color: hsla(var(--color-primary-base), 0.8);
+      background-color: hsla(@color-primary-hsl, 0.8);
     }
     a {
       padding: 1rem 1rem 1rem 4rem;
       color: #fff;
       &:hover,
       &:focus {
-        background-color: hsla(var(--color-primary-base), 0.4);
+        background-color: hsla(@color-primary-hsl, 0.4);
       }
       @media (min-width: 992px) {
         text-align: center;

@@ -24,9 +24,6 @@ const mutations = {
 
 const actions = {
   nuxtServerInit({ commit }) {
-    require(process.env.NODE_ENV === 'development'
-      ? `assets/css/theme.${this.$config.NUXT_ENV_THEME}.less`
-      : `assets/css/theme.null.less`)
     commit('SETENV', this.$config.NUXT_ENV_THEME)
   },
   someAsyncTask({ commit }) {

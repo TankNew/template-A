@@ -1,13 +1,4 @@
 // out: false
-@import 'base.less';
-@import 'header.less';
-@import 'banner.less';
-@import 'footer.less';
-@import 'homepage.less';
-@import 'contact.less';
-@import 'partners.less';
-@import 'news.less';
-@import 'product.less';
 .main {
   min-height: 20rem;
   .breadCrumb-container {
@@ -223,7 +214,7 @@
         > dl {
           padding: 1rem 0;
           margin-bottom: 0;
-          background-color: hsla(var(--color-primary-base), 0.8);
+          background-color: hsla(@color-primary-hsl, 0.8);
           dd {
             text-align: left;
             margin-bottom: 0;
@@ -316,22 +307,18 @@
       background-color: @color-primary;
     }
   }
-  .page-link {
-    color: @color-gray;
-    padding: 0.75rem 1rem;
-    margin-left: 0.5rem !important;
-    &:hover {
-      z-index: 2;
-      text-decoration: none;
+   // 翻页样式
+   .page-item {
+    .page-link {
+      color: @color-primary;
+      &:focus {
+        box-shadow: 0 0 0 1px @color-primary-dark;
+      }
+    }
+    &.active .page-link {
       color: @color-white;
       background-color: @color-primary;
-      border-color: @color-primary-lighter;
-    }
-
-    &:focus {
-      z-index: 3;
-      // outline: $pagination-focus-outline;
-      box-shadow: 0 0 0.2rem @color-primary-lighter;
+      border-color: @color-primary;
     }
   }
 }
