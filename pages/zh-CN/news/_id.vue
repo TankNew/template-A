@@ -58,11 +58,11 @@
       <section v-else class="page-news-list-container">
         <div class="page-news-leftbar">
           <dl
-            v-if="currentPathParent&&currentPathParent.children.length>0"
+            v-if="currentPath&&currentPath.children.length>0"
             class="page-news-leftbar-groups"
           >
             <dt>{{ $L(`QuickMenu`) }}</dt>
-            <dd v-for="item in currentPathParent.children" :key="item.code">
+            <dd v-for="item in currentPath.children" :key="item.code">
               <a
                 @click="goNewsGroup(item.catalogGroupId,1)"
                 href="javascript:void(0)"
