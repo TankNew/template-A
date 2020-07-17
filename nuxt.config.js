@@ -18,7 +18,7 @@ export default {
   publicRuntimeConfig: {
     NUXT_ENV: process.env.NUXT_ENV || process.env.NODE_ENV,
     NUXT_ENV_THEME: process.env.NUXT_ENV_THEME || defaultTheme,
-    NUXT_ENV_TENANT_ID: process.env.NUXT_ENV_TENANT_ID || 18,
+    NUXT_ENV_TENANT_ID: process.env.NUXT_ENV_TENANT_ID || 21,
     API_SECRET: `1234`
   },
   mode: 'universal',

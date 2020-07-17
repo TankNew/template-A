@@ -50,7 +50,7 @@
           <div class="logo">
             <img :src="companyInfo.logo" />
           </div>
-          <div class="company-name">{{ companyInfo.appName }}</div>
+          <div class="company-name">{{ companyInfo.logoText }}</div>
         </div>
         <!-- 导航 -->
         <div class="navbar-container">
@@ -134,7 +134,7 @@
           <div class="logo">
             <img :src="companyInfo.logo" />
           </div>
-          <div class="company-name">{{ companyInfo.appName }}</div>
+          <div class="company-name">{{ companyInfo.logoText }}</div>
         </div>
         <div class="contact-info-contact">
           <div class="email">
