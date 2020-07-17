@@ -1,5 +1,7 @@
 import axios from 'axios'
 import appconst from '../utiltools/appconst'
+import themes from '../themes.json'
+
 // 禁用严格模式
 const strict = false
 
@@ -9,50 +11,7 @@ const state = () => ({
   ip: null,
   abp: {},
   theme: {},
-  themes: [
-    {
-      displayName: 'blue',
-      hue: '210',
-      saturation: '65%',
-      lightness: '30%'
-    },
-    {
-      displayName: 'blue-lighter',
-      hue: '210',
-      saturation: '63%',
-      lightness: '50%'
-    },
-    {
-      displayName: 'green',
-      hue: '160',
-      saturation: '100%',
-      lightness: '30%'
-    },
-    {
-      displayName: 'green-dark',
-      hue: '142',
-      saturation: '66%',
-      lightness: '28%'
-    },
-    {
-      displayName: 'orange',
-      hue: '13',
-      saturation: '100%',
-      lightness: '45%'
-    },
-    {
-      displayName: 'purple',
-      hue: '300',
-      saturation: '20%',
-      lightness: '50%'
-    },
-    {
-      displayName: 'red',
-      hue: '4',
-      saturation: '79%',
-      lightness: '60%'
-    }
-  ]
+  themes
 })
 const mutations = {
   DECREMENT_MAIN_COUNTER(state) {

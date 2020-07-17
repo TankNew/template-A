@@ -26,10 +26,10 @@
     </section>
     <section v-if="productGroup1" class="container product-list">
       <h3 class="page-title">
-        <span class="name">{{ productGroup1.displayName }}</span>
+        <span class="name">{{ productGroup1.title }}</span>
         <span class="more">
           <a
-            @click="goNewsGroup(productGroup1.id,3)"
+            @click="goNewsGroup(productGroup1.catalogGroupId,productGroup1.type)"
             href="javascript:void(0)"
           >{{ $L('More') }} ></a>
         </span>
@@ -37,7 +37,7 @@
       <ul>
         <li
           v-for="item in productGroup1.items"
-          @click="goNewsDetail(item.id,3)"
+          @click="goNewsDetail(item.id,productGroup1.type)"
         >
           <div class="product-container">
             <div class="product-cover">
@@ -107,26 +107,19 @@ export default {
   async asyncData({ isDev, route, store, env, query, req, res, redirect, error }) {
     await store.dispatch('app/getHomePage')
 
-    let newsGroup1, picGroup1, productGroup1, params, ad1, announces
+    let newsGroup1, picGroup1, productGroup1, productGroup1Items, params, ad1, announces
+
     const homeGroups = store.state.app.homePage.groups.filter(x => x.catalogGroup)
 
-    ad1 = store.state.app.homePage.blocks.length > 0 ? store.state.app.homePage.blocks[0] : null
-    newsGroup1 =
-      homeGroups.filter(x => x.catalogGroup.catalogType === 1).length > 0
-        ? homeGroups.filter(x => x.catalogGroup.catalogType === 1)[0].catalogGroup
-        : null
-    picGroup1 =
-      homeGroups.filter(x => x.catalogGroup.catalogType === 2).length > 0
-        ? homeGroups.filter(x => x.catalogGroup.catalogType === 2)[0].catalogGroup
-        : null
-    productGroup1 =
-      homeGroups.filter(x => x.catalogGroup.catalogType === 3).length > 0
-        ? homeGroups.filter(x => x.catalogGroup.catalogType === 3)[0].catalogGroup
-        : null
+    ad1 = store.state.app.homePage.blocks.length > 0 ? store.state.app.homePage.blocks[0] : {}
+    productGroup1 = homeGroups.length > 0 ? homeGroups[0] : null
+    picGroup1 = homeGroups.length > 1 ? homeGroups[1] : null
+    newsGroup1 = homeGroups.length > 2 ? homeGroups[2] : null
+
     if (newsGroup1 !== null) {
       params = {
         params: {
-          CatalogGroupId: newsGroup1.id,
+          CatalogGroupId: newsGroup1.catalogGroupId,
           SkipCount: 0,
           MaxResultCount: 6,
           Sorting: 'IsTop DESC, Number DESC'
@@ -137,7 +130,7 @@ export default {
     if (picGroup1 !== null) {
       params = {
         params: {
-          CatalogGroupId: picGroup1.id,
+          CatalogGroupId: picGroup1.catalogGroupId,
           SkipCount: 0,
           MaxResultCount: 6,
           Sorting: 'IsTop DESC, Number DESC'
@@ -148,7 +141,7 @@ export default {
     if (productGroup1 !== null) {
       params = {
         params: {
-          Id: productGroup1.id
+          Id: productGroup1.catalogGroupId
         }
       }
       const result = await store.dispatch('app/getCatalogGroupList', params)
@@ -156,7 +149,7 @@ export default {
 
       params = {
         params: {
-          CatalogGroupId: productGroup1.id,
+          CatalogGroupId: productGroup1.catalogGroupId,
           SkipCount: 0,
           MaxResultCount: 6,
           Sorting: 'IsTop DESC, Number DESC'
@@ -167,7 +160,7 @@ export default {
     params = {
       params: {
         SkipCount: 0,
-        MaxResultCount: 2
+        MaxResultCount: 1
       }
     }
     announces = (await store.dispatch('app/getAnounces', params)).items
