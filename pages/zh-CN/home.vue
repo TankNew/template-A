@@ -111,7 +111,7 @@ export default {
 
     const homeGroups = store.state.app.homePage.groups.filter(x => x.catalogGroup)
 
-    ad1 = store.state.app.homePage.blocks.length > 0 ? store.state.app.homePage.blocks[0] : {}
+    ad1 = store.state.app.homePage.blocks.length > 0 ? store.state.app.homePage.blocks[0] : null
     productGroup1 = homeGroups.length > 0 ? homeGroups[0] : null
     picGroup1 = homeGroups.length > 1 ? homeGroups[1] : null
     newsGroup1 = homeGroups.length > 2 ? homeGroups[2] : null

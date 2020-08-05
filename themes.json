@@ -35,11 +35,12 @@
     "saturation": "100%",
     "lightness": "50%"
   },
+
   {
-    "displayName": "tomato",
-    "hue": "9",
+    "displayName": "orange-dark",
+    "hue": "13",
     "saturation": "100%",
-    "lightness": "64%"
+    "lightness": "45%"
   },
   {
     "displayName": "purple",
@@ -49,26 +50,26 @@
   },
   {
     "displayName": "purple-dark",
-    "hue": "280",
-    "saturation": "61%",
-    "lightness": "50%"
+    "hue": "263",
+    "saturation": "45%",
+    "lightness": "56%"
   },
   {
     "displayName": "pink",
-    "hue": "330",
-    "saturation": "100%",
-    "lightness": "71%"
+    "hue": "345",
+    "saturation": "70%",
+    "lightness": "60%"
   },
   {
     "displayName": "indianred",
-    "hue": "0",
-    "saturation": "53%",
-    "lightness": "58%"
+    "hue": "351",
+    "saturation": "71%",
+    "lightness": "52%"
   },
   {
     "displayName": "red",
-    "hue": "0",
-    "saturation": "60%",
+    "hue": "3",
+    "saturation": "76%",
     "lightness": "50%"
   }
 ]
