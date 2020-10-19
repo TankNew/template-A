@@ -109,7 +109,7 @@ export default {
       currentPath: state => state.app.currentPath,
       currentPathParent: state => state.app.currentPathParent,
       isRootGroup: state =>
-        state.app.currentPath.code.split('.').length - 1 === 1 && state.app.currentPath.children.length > 0
+        state.app.currentPath.code && state.app.currentPath.code.split('.').length - 1 === 1 && state.app.currentPath.children.length > 0
     })
   },
   validate({ params }) {

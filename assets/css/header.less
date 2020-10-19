@@ -3,7 +3,37 @@
 
 header {
   background-color: @color-white;
-
+  .wexin-code {
+    position: absolute;
+    top: 3rem;
+    right: 0;
+    width: 28rem;
+    height: 28rem;
+    background-color: @color-white;
+    box-shadow: 0 1px 10px #ccc;
+    z-index: 1000;
+    > .code {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      white-space: nowrap;
+      width: 100%;
+      height: calc(100% - 4rem);
+      color: @color-gray;
+      img {
+        height: calc(100% - 6rem);
+      }
+    }
+    .close {
+      display: block;
+      position: absolute;
+      cursor: pointer;
+      right: 1rem;
+      top: 1rem;
+    }
+  }
   .fixed-bar {
     position: fixed;
     top: 0;
@@ -11,7 +41,7 @@ header {
     padding: 1rem;
     color: @color-white;
     background-color: @color-primary;
-    z-index: 99;
+    z-index: 9999;
     > * {
       opacity: 1;
     }
@@ -52,31 +82,6 @@ header {
       @media (min-width: 992px) {
         display: inline-block;
         position: relative;
-      }
-      .wexin-code {
-        position: absolute;
-        top: 3rem;
-        right: 0;
-        width: 28rem;
-        height: 28rem;
-        background-color: @color-white;
-        box-shadow: 0 1px 10px #ccc;
-        z-index: 1000;
-        > .code {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          text-align: center;
-          white-space: nowrap;
-        }
-        .close {
-          display: block;
-          position: absolute;
-          cursor: pointer;
-          right: 1rem;
-          top: 1rem;
-        }
       }
     }
     .toolbar-weixin {
